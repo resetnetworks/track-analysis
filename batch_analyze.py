@@ -8,6 +8,9 @@ import essentia.standard as es
 
 os.environ["TF_CPP_MIN_LOG_LEVEL"] = "3"
 
+# todo
+# need to change the hardcoded path name to dynamically fetched by s3.
+
 # ---------- CHROMAPRINT ----------
 def get_fingerprint(filename):
     result = subprocess.run(
