@@ -1,0 +1,45 @@
+# ---------- PYTHON ----------
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.py[cod]
+*.so
+
+# Virtual environment
+venv/
+.env/
+.env.*
+
+# ---------- OS ----------
+.DS_Store
+Thumbs.db
+
+# ---------- IDE ----------
+.vscode/
+.idea/
+
+# ---------- LOGS ----------
+*.log
+
+# ---------- AUDIO FILES ----------
+audio/
+
+# ---------- MODEL FILES ----------
+models/
+
+# ---------- RESULTS / OUTPUT ----------
+results/
+
+
+# ---------- TEMP FILES ----------
+*.tmp
+*.cache
+
+# ---------- NOTEBOOK ----------
+.ipynb_checkpoints/
+
+# ---------- SYSTEM ----------
+*.swp
+
+random/
