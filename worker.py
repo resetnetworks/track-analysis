@@ -35,7 +35,8 @@ def upload_result(result, original_key, msg_body):
     s3.put_object(
         Bucket=S3_BUCKET,
         Key=output_key,
-        Body=json.dumps(result, indent=2)
+        Body=json.dumps(result, indent=2),
+        ContentType="application/json"
     )
 
     return output_key
