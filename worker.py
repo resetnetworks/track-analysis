@@ -43,7 +43,19 @@ def upload_result(result, original_key, msg_body):
 
 def process_message(message):
     body = json.loads(message["Body"])
-    s3_key = body["file"]
+    # s3_key = body["file"]
+    #code edited here for aws policy
+    # Skip test events
+    if "Records" not in body:
+        print("Skipping non-S3 event")
+        return message["ReceiptHandle"]
+
+    record = body["Records"][0]
+    s3_key = record["s3"]["object"]["key"]
+
+    # decode URL encoding (spaces etc.)
+    import urllib.parse
+    s3_key = urllib.parse.unquote_plus(s3_key)
 
     print(f"Processing: {s3_key}")
 
