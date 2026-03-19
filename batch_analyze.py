@@ -201,11 +201,15 @@ def analyze_track(filename):
     avg_music = float(np.mean(yamnet_probs[:, music_idx])) * 100
     avg_singing = float(np.mean(yamnet_probs[:, singing_idx])) * 100
 
+    # Track analysis time
+    end_time = time.time()
+    track_time = end_time - start_time
 
     # ---------- FINAL JSON ----------
     data = {
         "file": filename,
         "duration": duration,
+        "processing_time_sec": track_time,
 
         "tempo": float(tempo),
         "beats_count": int(len(beats)),
@@ -243,11 +247,8 @@ def analyze_track(filename):
     }
 
     print(json.dumps(data, indent=2))
-    end_time = time.time()
-
-    track_time = end_time - start_time
     print(f"\n........Analysis Ended.........\n")
-    print(f"Track done in {track_time:.2f} sec")
+    print(f"Track analysis done in {track_time:.2f} sec")
 
     return data, track_time
 
