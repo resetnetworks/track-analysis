@@ -209,7 +209,7 @@ def analyze_track(filename):
     data = {
         "file": filename,
         "duration": duration,
-        "processing_time_sec": track_time,
+        "processing_time_sec": round(track_time,2),
 
         "tempo": float(tempo),
         "beats_count": int(len(beats)),
