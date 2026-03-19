@@ -25,12 +25,16 @@ def upload_result(result, original_key, msg_body):
     base_name = os.path.splitext(os.path.basename(original_key))[0]
     file_name = f"{base_name}.json"
 
-    if msg_body.get("type") == "album":
-        album_name = msg_body.get("album_name") or extract_album_name(original_key)
+    # this is seperation of album and track but useless now.
+    # if msg_body.get("type") == "album":
+    #     album_name = msg_body.get("album_name") or extract_album_name(original_key)
 
-        output_key = f"output/albums/{album_name}/{file_name}"
-    else:
-        output_key = f"output/singles/{file_name}"
+    #     output_key = f"output/albums/{album_name}/{file_name}"
+    # else:
+    #     output_key = f"output/singles/{file_name}"
+
+    # single unified output path
+    output_key = f"output/{file_name}"
 
     s3.put_object(
         Bucket=S3_BUCKET,
