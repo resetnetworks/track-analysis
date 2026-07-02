@@ -6,6 +6,8 @@ import numpy as np
 import essentia
 import essentia.standard as es
 
+from constants import speech_labels, music_labels, singing_labels
+
 os.environ["TF_CPP_MIN_LOG_LEVEL"] = "3"
 
 # todo
@@ -30,6 +32,19 @@ def get_fingerprint(filename):
 
     return fingerprint, duration_fp
 
+
+# ------------- AUDIO FEAT. -------------
+def compute_bucket_score(yamnet_probs, yamnet_labels, label_set):
+    indices = []
+
+    for i, label in enumerate(yamnet_labels):
+        if label in label_set:
+            indices.append(i)
+
+    if len(indices) == 0:
+        return 0.0
+
+    return float(np.mean(yamnet_probs[:, indices])) * 100
 
 # ---------- TRACK ANALYSIS ----------
 def analyze_track(filename):
@@ -197,9 +212,20 @@ def analyze_track(filename):
     singing_idx = yamnet_labels.index("Singing")
 
     # Average the probabilities across the whole song
-    avg_speech = float(np.mean(yamnet_probs[:, speech_idx])) * 100
-    avg_music = float(np.mean(yamnet_probs[:, music_idx])) * 100
-    avg_singing = float(np.mean(yamnet_probs[:, singing_idx])) * 100
+    # avg_speech = float(np.mean(yamnet_probs[:, speech_idx])) * 100
+    # avg_music = float(np.mean(yamnet_probs[:, music_idx])) * 100
+    # avg_singing = float(np.mean(yamnet_probs[:, singing_idx])) * 100
+
+    avg_speech = compute_bucket_score(yamnet_probs, yamnet_labels, speech_labels)
+    avg_music = compute_bucket_score(yamnet_probs, yamnet_labels, music_labels)
+    avg_singing = compute_bucket_score(yamnet_probs, yamnet_labels, singing_labels)
+
+    total = avg_speech + avg_music + avg_singing
+
+    if total > 0:
+        avg_speech = (avg_speech / total) * 100
+        avg_music = (avg_music / total) * 100
+        avg_singing = (avg_singing / total) * 100
 
     # Track analysis time
     end_time = time.time()
@@ -255,7 +281,7 @@ def analyze_track(filename):
 
 # ---------- MAIN ----------
 def main():
-    folder_path = "audio/Nariel_album1"
+    folder_path = "audio/taylor"
     supported_formats = (".wav", ".mp3", ".flac")
 
     results = []

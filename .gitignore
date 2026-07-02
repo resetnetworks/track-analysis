@@ -23,15 +23,8 @@ Thumbs.db
 # ---------- LOGS ----------
 *.log
 
-# ---------- AUDIO FILES ----------
-audio/
-
 # ---------- MODEL FILES ----------
 models/
-
-# ---------- RESULTS / OUTPUT ----------
-results/
-
 
 # ---------- TEMP FILES ----------
 *.tmp
@@ -43,4 +36,17 @@ results/
 # ---------- SYSTEM ----------
 *.swp
 
+
+# ---------- AUDIO FILES ----------
+audio/
+new-audio/
+
+# ---------- RESULTS / OUTPUT ----------
+results/
+results_copyright/
+
+# -------------------------
+effective_fingerprint/
 random/
+effNet_embeddings/
+docs/
